@@ -172,63 +172,8 @@ bool InferenceRunner::run(const std::string& input, std::string& output) {
 }
 
 std::string InferenceRunner::formatPrompt(const std::string& input) {
-    // AI/ML RESEARCHER APPROACH: Optimal prompt engineering for small models
-
-    // For large code files - include full context but guide output structure
-    if (input.length() > 500) {
-        return "You are a senior software engineer conducting a code review. "
-               "Analyze the following C++ code and provide a comprehensive technical analysis.\n\n"
-               "CODE TO ANALYZE:\n" + input + "\n\n"
-               "TECHNICAL ANALYSIS:\n"
-               "1. Purpose: What does this code accomplish?\n"
-               "2. Architecture: Key classes, methods, and design patterns\n"
-               "3. Implementation: Notable technical details and algorithms\n"
-               "4. Quality: Code quality, best practices, potential improvements\n"
-               "5. Usage: How this code fits into a larger system\n\n"
-               "Provide detailed analysis:\n\n";
-    }
-
-    // For code snippets - focused technical analysis
-    if (input.find("```") != std::string::npos ||
-        input.find("#include") != std::string::npos ||
-        input.find("class ") != std::string::npos) {
-        return "Analyze this C++ code and explain its technical implementation:\n\n"
-               + input + "\n\n"
-               "Technical Analysis:\n"
-               "- Purpose and functionality\n"
-               "- Key components and algorithms\n"
-               "- Design patterns and best practices\n"
-               "- Performance considerations\n\n"
-               "Detailed explanation:\n\n";
-    }
-
-    // For technical explanations - structured educational format
-    if (input.find("Explain") == 0 || input.find("What") == 0) {
-        return "Technical Question: " + input + "\n\n"
-               "Provide a comprehensive technical explanation with:\n"
-               "1. Clear concept definitions\n"
-               "2. Practical C++ code examples\n"
-               "3. Real-world usage scenarios\n"
-               "4. Best practices and common pitfalls\n\n"
-               "Technical Answer:\n\n";
-    }
-
-    // For comprehensive guides - structured technical writing
-    if (input.find("comprehensive") != std::string::npos ||
-        input.find("guide") != std::string::npos) {
-        return "Create a comprehensive technical guide: " + input + "\n\n"
-               "Structure your guide with:\n"
-               "1. Core concepts and definitions\n"
-               "2. Detailed code examples with explanations\n"
-               "3. Practical implementation patterns\n"
-               "4. Performance considerations and best practices\n"
-               "5. Common pitfalls and how to avoid them\n\n"
-               "Technical Guide:\n\n";
-    }
-
-    // Default - clean technical analysis
-    return "Technical Request: " + input + "\n\n"
-           "Provide a detailed technical response with examples and practical guidance:\n\n";
+    // TinyLlama Chat format - required for proper generation
+    return "<|user|>\n" + input + "\n<|assistant|>\n";
 }
 
 bool InferenceRunner::runOnFile(const std::filesystem::path& input_path,
