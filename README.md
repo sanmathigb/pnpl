@@ -1,13 +1,4 @@
-# PNPL (Push 'n' Pop LLM)
-
-A file-based queue system for managing inference tasks with LLMs.
-
-## Prerequisites
-
-- CMake 3.10 or higher
-- C++17 compatible compiler
-- Git
-- nlohmann_json
+# pnpl. Push Now Pop Later.
 
 ## Building
 
@@ -41,7 +32,7 @@ wget https://huggingface.co/TheBloke/Llama-2-7B-Chat-GGUF/resolve/main/llama-2-7
 2. Run inference:
 ```bash
 # Push a task
-./build/pnpl push --type text --content "Hello" --prompt "Translate to Spanish"
+./build/pnpl push "Your Input to the LLM"
 
 # Get the result
 ./build/pnpl pop
